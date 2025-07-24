@@ -12,7 +12,7 @@ use revm::{
     context::LocalContextTr,
     handler::{EthPrecompiles, PrecompileProvider},
     interpreter::{CallInput, Gas, InputsImpl, InstructionResult, InterpreterResult},
-    precompile::{PrecompileError, PrecompileFn, PrecompileResult, Precompiles},
+    precompile::{DefaultCrypto, PrecompileError, PrecompileFn, PrecompileResult, Precompiles},
     Context, Journal,
 };
 
@@ -247,7 +247,7 @@ impl PrecompilesMap {
                 static_precompiles.inner().iter().map(|(addr, f)| (addr, *f))
             {
                 let precompile =
-                    move |input: PrecompileInput<'_>| precompile_fn(input.data, input.gas);
+                    move |input: PrecompileInput<'_>| precompile_fn(input.data, input.gas, &DefaultCrypto);
                 dynamic.inner.insert(*addr, precompile.into());
                 dynamic.addresses.insert(*addr);
             }
@@ -280,7 +280,7 @@ impl PrecompilesMap {
         let static_result = match &self.precompiles {
             PrecompilesKind::Builtin(precompiles) => precompiles
                 .get(address)
-                .map(|f| Either::Left(|input: PrecompileInput<'_>| f(input.data, input.gas))),
+                .map(|f| Either::Left(|input: PrecompileInput<'_>| f(input.data, input.gas, &DefaultCrypto))),
             PrecompilesKind::Dynamic(dyn_precompiles) => {
                 dyn_precompiles.inner.get(address).map(Either::Right)
             }
@@ -344,7 +344,7 @@ where
 
         let mut result = InterpreterResult {
             result: InstructionResult::Return,
-            gas: Gas::new(gas_limit),
+            gas: Gas::new(gas_limit, false),
             output: Bytes::new(),
         };
 
@@ -540,7 +540,7 @@ where
 
 impl From<PrecompileFn> for DynPrecompile {
     fn from(f: PrecompileFn) -> Self {
-        let p = move |input: PrecompileInput<'_>| f(input.data, input.gas);
+        let p = move |input: PrecompileInput<'_>| f(input.data, input.gas, &DefaultCrypto);
         p.into()
     }
 }
