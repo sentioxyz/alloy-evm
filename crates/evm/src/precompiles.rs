@@ -344,7 +344,7 @@ where
 
         let mut result = InterpreterResult {
             result: InstructionResult::Return,
-            gas: Gas::new(gas_limit, false),
+            gas: Gas::new(gas_limit),
             output: Bytes::new(),
         };
 
