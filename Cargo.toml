@@ -67,5 +67,5 @@ serde_json = "1"
 test-case = "3"
 
 [patch.crates-io]
-# revm = { git = "https://github.com/bluealloy/revm", rev = "11b16259" }
-# op-revm = { git = "https://github.com/bluealloy/revm", rev = "11b16259" }
+revm = { git = "https://github.com/sentioxyz/revm", branch = "release/v87" }
+op-revm = { git = "https://github.com/sentioxyz/revm", branch = "release/v87" }
