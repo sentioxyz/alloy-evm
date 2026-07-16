@@ -61,3 +61,9 @@ serde = { version = "1", default-features = false, features = ["derive"] }
 thiserror = { version = "2.0.0", default-features = false }
 serde_json = "1"
 test-case = "3"
+
+[patch.crates-io]
+revm = { git = "https://github.com/sentioxyz/revm", branch = "release/v113" }
+
+#alloy-hardforks = { git = "https://github.com/alloy-rs/hardforks", rev = "0fd230f5aa24c4f6a8c593918b7449df0c20f60a" }
+#alloy-op-hardforks = { git = "https://github.com/alloy-rs/hardforks", rev = "0fd230f5aa24c4f6a8c593918b7449df0c20f60a" }
