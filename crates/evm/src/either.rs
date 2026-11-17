@@ -33,6 +33,10 @@ where
         either::for_both!(self, evm => evm.cfg_env())
     }
 
+    fn cfg_env_mut(&mut self) -> &mut CfgEnv<Self::Spec> {
+        either::for_both!(self, evm => evm.cfg_env_mut())
+    }
+
     fn chain_id(&self) -> u64 {
         either::for_both!(self, evm => evm.chain_id())
     }

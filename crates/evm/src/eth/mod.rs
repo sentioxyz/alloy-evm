@@ -215,6 +215,10 @@ where
         &self.cfg
     }
 
+    fn cfg_env_mut(&mut self) -> &mut CfgEnv<Self::Spec> {
+        &mut self.cfg
+    }
+
     fn chain_id(&self) -> u64 {
         self.cfg.chain_id
     }
@@ -322,6 +326,10 @@ mod tests {
 
         fn cfg_env(&self) -> &CfgEnv<Self::Spec> {
             self.inner.cfg_env()
+        }
+
+        fn cfg_env_mut(&mut self) -> &mut CfgEnv<Self::Spec> {
+            self.inner.cfg_env_mut()
         }
 
         fn chain_id(&self) -> u64 {

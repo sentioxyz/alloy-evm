@@ -67,6 +67,9 @@ pub trait Evm {
     /// Reference to [`CfgEnv`].
     fn cfg_env(&self) -> &CfgEnv<Self::Spec>;
 
+    /// Mutable configuration, used to apply tracing overrides after replaying prior transactions.
+    fn cfg_env_mut(&mut self) -> &mut CfgEnv<Self::Spec>;
+
     /// Returns the chain ID of the environment.
     fn chain_id(&self) -> u64;
 
